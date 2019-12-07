@@ -1,0 +1,98 @@
+extends layout
+
+block content
+  .headerHome
+    p.big Welkom bij Tripplanner
+    p.footer Start nu met je reis te boeken!
+  .slideshow-container
+    .mySlides.fade
+      .numbertext 1 / 3
+      a(href='/countries/Noorwegen')
+        img(src='images/norway_slide.jpg' style='width:100%')
+        .text Noorwegen
+    .mySlides.fade
+      .numbertext 2 / 3
+      a(href='/countries/USA')
+        img(src='images/USA_slide.jpg' style='width:100%')
+        .text USA
+    .mySlides.fade
+      .numbertext 3 / 3
+      a(href='/countries/Italie')
+        img(src='images/italy_slide.jpg' style='width:100%')
+        .text Italië
+    a.prevcar(onclick='plusSlides(-1)') &#x276E;
+    a.nextcar(onclick='plusSlides(1)') &#x276F;
+  br
+  div(style='text-align:center')
+    span.dot
+    span.dot
+    span.dot
+
+  script.
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    window.setInterval(function(){
+      plusSlides(1);
+    }, 5000);  
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+
+    }
+
+  -
+    var timeline = [
+      {
+        title: "Log in of registreer",
+        detail: "Als je nieuw bent op de website maak dan snel een account aan of log in met een bestaand account."
+      }, {
+        title: "Kies een land",
+        detail: "Iedereen heeft wel een aantal landen op zijn bucket list staan, wij bieden een mooi overzicht van populaire bestemmingen. Surf verder naar landen en kijk welk land je volgende bestemming zal worden."
+      }, {
+        title: "Residentie",
+        detail: "Kies je residentie, wij bieden een aantal interessante deals aan voor hotels die met ons samenwerken. Je kan ook steeds je eigen residentie kiezen."
+      }, {
+        title: "Klaar",
+        detail: "Bekijk je geboekte reis in 'Mijn reizen' hier vind je een overzicht met alle informatie."
+      }
+      ];
+      
+  mixin timeline(entry)
+    dl.timeline--entry
+      dt.timeline--entry__title= entry.title
+      dd.timeline--entry__detail= entry.detail
+
+  .wrapper
+    h1 Hoe ga ik van start?
+
+    .timeline
+      for entry in timeline
+        +timeline(entry)
+  a.beginbutton(href='/countries')
+    button.huge.ui.button
+      | Bekijk onze landen 
+      i.right.arrow.icon
+
+  
+  

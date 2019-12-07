@@ -1,0 +1,28 @@
+extends layout
+
+block content
+
+  .ui.aligned.center.aligned.grid
+    .nine.wide.middle.column
+      form.ui.large.form(method='Post', action='/users/login' autocomplete="off")
+        h1.header Login
+        .ui.stacked.segment
+          .field
+            .ui.left.icon.input
+              i.user.icon
+              input.form-control(type='text' name='username' placeholder='Gebruikersnaam')
+          br
+          .field
+            .ui.left.icon.input
+              i.lock.icon
+              input.form-control(type='password' name='password' placeholder='Password')
+        input.ui.large.blue.submit.button(type='submit',value='Log in')
+      .ui.message
+        | Nieuw hier? 
+        a(href='/users/register') Registreer
+      .spacing
+
+
+  
+  
+      

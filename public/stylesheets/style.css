@@ -1,0 +1,259 @@
+/*general menu css*/
+.ui.inverted.small.labeled.icon.menu{
+  background-color:#1565c0;
+  margin:0px;
+}
+.ui.inverted.vertical.footer.segment{
+  background-color:#1565c0;
+
+}
+.ui.inverted.dropdown.item{
+  background-color:#1565c0;
+}
+.tablet.mobile.only.row{
+}
+
+
+/*alerts*/
+.alert-error{
+  width: 100px;
+  margin:30px;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+.alert-succes_msg{
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+/*HOME PAGE*/
+/*bottom button*/
+button.huge.ui.button{
+  background-color:#1e88e5;
+  color:white;
+}
+button.huge.ui.button:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #1565c0;
+
+}
+/*home page header*/
+.headerHome{
+  font-family: 'Roboto', sans-serif;
+  background-color: #e3f2fd;
+  margin: 35px 0px 15px 0px;
+  text-align: center;
+  border-style: solid;
+  border-color:#90caf9  ;
+  border-left: 0px ;
+  border-right: 0px ;
+}
+p.big{
+  font-size: 45px;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+p.footer{
+  font-size: 25px;
+
+}
+a.beginbutton{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+/*COUNTRIES PAGE*/
+.ui.fixed.bottom.right.sticky{
+    offset       : 50px;
+    bottomOffset : 50;
+    context      : '#element-to-follow';
+  }
+
+.countryContainer{
+  height: 100%;
+
+}
+.countryItem{
+  display: inline-block;
+  background-color: #e3f2fd;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 10px;
+  margin: 10px 10px 10px 10px;
+
+}
+.countryItem:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #b7defa;
+
+}
+p.country{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  font-style: italic;
+  color:#0d47a1;
+  margin-bottom: 0px;
+}
+img.country{
+  width:200px
+}
+/*mobile*/
+@media (max-width: 800px) {
+  .countryContainer{
+    margin-bottom: 300px;
+  }
+  p.country{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color:#0d47a1;
+    margin-bottom: 0px;
+  }
+  img.country{
+    width:150px
+  }
+}
+
+/*COUNTRY PAGE*/
+
+.layoutContainer{
+  width:100%;
+  text-align:center;
+  display: flex;
+  overflow: auto;
+
+
+}
+
+.layoutCenter{
+
+  width:50%;
+  margin: 10px;
+  padding:10px;
+  clear: both
+
+
+}
+.layoutSide{
+  clear: both;
+  margin:10px;
+  border-radius:5px;
+  padding:10px;
+
+  box-shadow: 0 0 10px grey;
+  width:20%;
+
+}
+
+/*mobile*/
+@media (max-width: 800px) {
+  .layoutContainer{
+    width:100%;
+    text-align:center;
+    display: inline;
+    overflow: auto;
+
+
+  }
+  .layoutCenter{
+    width:90%;
+    display: inline-block;
+    margin:15px auto 15px auto;
+
+  }
+  .layoutSide{
+    width:auto;
+    display: inline-block;
+    margin-left: auto;
+
+
+  }
+
+}
+
+/*mobile banner image adjust*/
+@media (min-width: 1400px){
+  img.bannerPicture{
+    height: 300px;
+    width:100%;
+  }
+}
+@media (max-width: 1400px) {
+  img.bannerPicture{
+    height:300px;
+    width: auto;
+
+  }
+
+}
+@media (max-width: 800px){
+  img.bannerPicture{
+    height:150px;
+    width: auto;
+
+  }
+
+}
+
+/*floating add button*/
+.fab {
+
+  height: 60px;
+  background-color:#1565c0 ;
+  border-radius: 40px;
+  box-shadow: 0 6px 10px 0 #666;
+
+  z-index: 1;
+  padding:10px;
+  font-size: 25px;
+  line-height: 40px;
+  color: white;
+
+
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+
+ transition: all 0.1s ease-in-out;
+}
+
+.fab:hover {
+  box-shadow: 0 6px 14px 0 #666;
+  transform: scale(1.05);
+}
+
+/*MY TRAVELS PAGE*/
+.ui.placeholder.segment{
+  margin: 0px;
+}
+
+/*Floating button Mobile*/
+@media (max-width: 800px){
+  .fab {
+
+    height: 35px;
+    background-color:#1565c0 ;
+    border-radius: 20px;
+    box-shadow: 0 3px 5px 0 #666;
+
+    z-index: 1;
+    padding:7px;
+    font-size: 15px;
+    line-height: 20px;
+    color: white;
+
+
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+   transition: all 0.1s ease-in-out;
+  }
+}
+.spacing{
+  height: 200px;
+}

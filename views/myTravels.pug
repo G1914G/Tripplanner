@@ -1,0 +1,106 @@
+extends layout
+
+block content 
+  .ui.placeholder.segment
+    .ui.two.column.stackable.center.aligned.grid
+      .ui.vertical.divider
+      .middle.aligned.row
+        .column
+          h2.ui.center.aligned.icon.header
+            i.circular.suitcase.icon
+            |   Mijn reizen
+        .column
+          .ui.icon.header
+            i.world.icon
+            |Voeg een nieuwe reis toe
+          a.ui.primary.button(href='/users/newTravel')
+            | Plan
+  if notravel
+    .ui.raised.segment
+      .one.column.stackable
+        h2.ui.center.aligned.header 
+          | U heeft nog geen reizen gepland! 
+    .spacing
+    .spacing
+  else
+    for travel in travels
+      .ui.raised.segment
+        .one.column.stackable
+          h2.ui.center.aligned.header 
+            | Mijn reis naar #{travel.id_country.name}
+      .three.column.stackable.ui.grid
+        .column
+          .ui.raised.segment
+            .ui.calendar(id=travel._id)
+        .column
+          .ui.raised.segment
+            p U gaat op reis naar #{travel.id_country.name}, naar de stad #{travel.id_city.name} in het vakantiehuis #{travel.id_vacationhouse.name}.
+            p U kunt de locatie van uw reis bekijken op het kaartje.
+            p Op de kalender kunt u de verblijfsduur bekijken. U gaat op reis van #{travel.date_from_formatted} tot #{travel.date_untill_formatted}
+            p Er is plaats voor #{travel.id_vacationhouse.capacity} personen in #{travel.id_vacationhouse.name}.
+            p De prijs van dit vakantiehuis is #{travel.id_vacationhouse.price} euro per nacht.
+        .column
+          .ui.raised.segment
+            div(style='width: 100%')
+            iframe(width='100%' height='500' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/place?key=AIzaSyBKTCCYwLYcRHuFzIhfRZFaHft-eJzguRs\&q='+travel.id_vacationhouse.location allowfullscreen='')
+            br
+  script.
+    function createDateArray(begin, end){
+      let begind=new Date(begin);
+      let endd=new Date(end);
+      begind.setDate(begind.getDate()-1);
+      endd.setDate(endd.getDate()-1);
+      
+      let days=[];
+      days.push({
+        date: begind,
+        message:'Vakantie!'
+      });
+      let date=begind;
+      while(date<=endd){
+        date.setDate(date.getDate()+1);
+        days.push({
+        date: new Date(date),
+        message:'Vakantie!'
+        });
+      }
+      return days;
+    };
+      
+    $( document ).ready(function() {  
+    
+      let travels=[];
+      console.log('Kalenders maken');
+      var xhttp;
+      
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let response = this.responseText;
+          travels = JSON.parse(response);
+          createCalenders(travels);
+          }
+      };
+      
+      xhttp.open("GET", "/users/userTravels", true);
+      xhttp.send();
+      });
+      function createCalenders(travels){
+        travels.forEach((travel)=>{
+          var querry='#'+travel._id;
+          $(querry).calendar({
+            type: 'date',
+            text: {
+              days: ['Z','M', 'D', 'W', 'D', 'V', 'Z'],
+              months: ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'],
+              monthsShort: ['Jan', 'Feb', 'Ma', 'Apr', 'Mei', 'Juni', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+              today: 'Vandaag',
+              now: 'Nu',
+              am: 'AM',
+              pm: 'PM'
+            },
+            eventClass: 'blue',
+            eventDates: createDateArray(travel.date_from,travel.date_untill),
+          });
+        });
+      }

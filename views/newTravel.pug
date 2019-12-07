@@ -1,0 +1,135 @@
+extends layout
+
+block content
+  
+  .ui.aligned.center.aligned.grid
+    .nine.wide.middle.column   
+      form.ui.form(method='POST' action='' autocomplete="off")
+        h1 Voeg reis toe
+        div.form-group
+          label(for='country') Land:
+          select#country.form-control(type='select', placeholder='Select land' onchange='populatecity(this.value)' name='country' required='true' )
+            - countrys.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+              option(value='')
+            for country in countrys
+              option(value=country._id) #{country.name}
+        div.form-group
+          label(for='city') Stad:
+          select#city.form-control(type='select', placeholder='Select stad' onchange='populatevacationhouse(this.value)' name='city' required='true' )
+
+        div.form-group
+          label(for='vacationhouse') Vakantiehuis:
+          select#vacationhouse.form-control(type='select', placeholder='Select vakantiehuis' onchange='createcalenders(this.value)' name='vacationhouse' required='true')
+        
+        div.form-group    
+          .two.fields#calenders
+
+        button.ui.button.blue.btn.btn-primary(type='submit') Plan reis
+        br
+        br              
+      script.
+        function createDateArray(blockedDates){
+          
+          let days=[];
+          for (var i = 0; i < blockedDates.length; i++) {
+          let db = new Date(blockedDates[i]);
+          db.setDate(db.getDate()-1);
+          days.push({
+            date: db,
+            message: 'Bezet',
+            class: 'red'
+          });
+          }
+          return days;
+        };
+        
+        var takendates=[];
+        
+        function createcalenders(selectedvacationhouse){
+          var xhttp;
+          
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              
+              var response = this.responseText;
+              
+              if(!(response == "")){
+              var disabledDates = JSON.parse(response);
+              console.log(disabledDates);
+              takendates=createDateArray(disabledDates.notavailable);
+              var pug="<div class='field'><label>Start date</label><div class='ui calendar' id='rangestart'>";
+              pug=pug+"<div class='ui input left icon'><i class='calendar icon'></i><input class='form-control' type='text' name='van' placeholder='van' /></div>";
+              pug=pug+"</div></div><div class='field'><label>End date</label><div class='ui calendar' id='rangeend'>";
+              pug=pug+"<div class='ui input left icon'><i class='calendar icon'></i><input class='form-control' type='text' name='tot' placeholder='tot' /></div></div></div>";
+              document.getElementById("calenders").innerHTML = pug;
+              createUICalanders();
+              console.log(takendates);
+              }
+            }
+          };
+          
+          xhttp.open("GET", "/selectdates/"+selectedvacationhouse, true);
+          xhttp.send();
+        }
+        
+        function createUICalanders(){
+          var today = new Date();
+          $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend'),
+            minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() ),
+            maxDate: new Date(today.getFullYear()+2, today.getMonth(), today.getDate() ),
+            disabledDates: takendates
+          });
+          $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart'),
+            minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() ),
+            maxDate: new Date(today.getFullYear()+2, today.getMonth(), today.getDate() ),
+            disabledDates: takendates
+          });
+        }
+  script.
+    function populatecity(selectedland){
+      var xhttp;
+      
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var pug="<option value=''></option>";
+          var response = this.responseText;
+          var citys = JSON.parse(response);
+          
+          for (var i = 0; i < citys.citys.length; i++) {
+            pug+="<option value='"+citys.citys[i]._id+"'>  " + citys.citys[i].name + "</option>";
+          }
+          document.getElementById("city").innerHTML = pug;
+        }
+      };
+      
+      xhttp.open("GET", "/countryid/"+selectedland, true);
+      xhttp.send();
+    }
+  script.
+    function populatevacationhouse(selectedcity){
+      var xhttp;
+      
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var pug="<option value=''></option>";
+          var response = this.responseText;
+          var vacationhouses = JSON.parse(response);
+          
+          for (var i = 0; i < vacationhouses.vacationhouses.length; i++) {
+            pug+="<option value='"+vacationhouses.vacationhouses[i]._id+"'>  " + vacationhouses.vacationhouses[i].name + "</option>";
+          }
+          document.getElementById("vacationhouse").innerHTML = pug;
+        }
+      };
+      
+      xhttp.open("GET", "/select/"+selectedcity, true);
+      xhttp.send();
+    }
+  

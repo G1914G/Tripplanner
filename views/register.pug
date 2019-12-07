@@ -1,0 +1,26 @@
+extends layout
+
+block content
+      
+  .ui.aligned.center.aligned.grid
+    .nine.wide.middle.column  
+      form.ui.form(method='Post', action='/users/register' autocomplete="off")
+        h1.header Registreer
+        .middle.field
+         label Naam:
+         input.form-control(name='name', type='text', placeholder='naam')
+        .field
+         label Email:
+         input.form-control(name='email', type='text', placeholder='email-adress')
+        .field
+         label Gebruikersnaam:
+         input.form-control(name='username', type='text', placeholder='gebruikersnaam')
+        .field
+         label Wachtwoord:
+         input.form-control(name='password', type='password', placeholder='wachtwoord')
+        .field
+         label Bevestig wachtwoord:
+         input.form-control(name='password2', type='password', placeholder='wachtwoord')
+        br
+        input.ui.blue.submit.button(type='submit',value='Registreer')
+  .spacing

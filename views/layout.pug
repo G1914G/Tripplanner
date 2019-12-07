@@ -1,0 +1,101 @@
+doctype html
+html
+  head
+      title Tripplanner
+      //paths to css files
+      link(rel='stylesheet' href='/stylesheets/semantic.min.css')
+      link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Maven+Pro&display=swap')
+      script(src='https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js')
+      link(rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.2/dist/semantic.min.css')
+      link(rel='stylesheet' href='/stylesheets/style.css')
+      link(rel='stylesheet' href='/stylesheets/carousel.css')
+      link(rel='stylesheet' href='/stylesheets/verticalTimeline.css')
+      script(src='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.2/dist/semantic.min.js')
+      <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+  body
+    //header
+    .ui.grid
+      .computer.only.row
+        .column
+          .ui.inverted.small.labeled.icon.menu
+            a.item(href='/')
+              i.home.icon
+              |     Home
+            a.item(href='/countries')
+              i.map.icon
+              |    Countries
+            a.item(href='/myTravels')
+              i.suitcase.icon
+              |    MyTravels
+            .right.small.menu
+              if user
+                a.item(href='/users/myAccount') #{user.name}
+                a.item(href='/users/logout')
+                  i.user.outline.icon
+                  | Log-out
+              else   
+                a.item(href='/users/register')
+                  i.user.plus.icon
+                  |   Sign up
+                a.item(href='/users/login')
+                  i.user.outline.icon
+                  | Log-in
+      .tablet.mobile.only.row
+        .column
+          .ui.inverted.small.labeled.icon.menu
+            .ui.big.blue.dropdown.item
+              i.bars.icon
+              |Menu
+              .ui.inverted.vertical.menu
+                a.item(href='/')
+                  i.home.icon
+                  |     Home
+                a.item(href='/countries')
+                  i.map.icon
+                  |    Countries
+                a.item(href='/myTravels')
+                  i.suitcase.icon
+                  |    MyTravels
+            .right.small.menu
+                  if user
+                      a.item(href='/users/myAccount') #{user.name}
+                      a.item(href='/users/logout')
+                        i.user.outline.icon
+                        | Log-uit
+                  else   
+                      a.item(href='/users/register')
+                        i.user.plus.icon
+                        |   Registreer
+                      a.item(href='/users/login')
+                        i.user.outline.icon
+                        | Log-in
+
+    //error messages
+    .ui.aligned.center.aligned.grid
+      .nine.wide.middle.column
+        != messages('message',locals)
+    if errors
+        .ui.aligned.center.aligned.grid
+          .nine.wide.middle.column
+            each error, i in errors
+              br
+              .ui.red.message #{error.msg}
+    block content
+    //footer
+    .ui.inverted.vertical.footer.segment
+      .ui.container
+        .ui.stackable.inverted.divided.equal.height.stackable.grid
+          .two.wide.column
+            h4.ui.inverted.header Makers
+            .ui.inverted.list
+              p
+              | Glenn Groothuis en Siebe Roets
+          .seven.wide.right.column
+            h4.ui.inverted.header About
+            p
+              | This website is built for educational purpose. All rights of imagery and text used on this page are reserved for the original creators.
+  script.
+    $('.ui.dropdown')
+    .dropdown()
+    ;

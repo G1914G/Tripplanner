@@ -1,0 +1,110 @@
+extends layout
+
+block content
+  .ui.modal
+    i.close.icon
+    #houseName.header
+      | House Name comes here
+    .image.content
+      .ui.medium.image
+        img#pic(src='/images/house.png')
+      .description
+        .ui.header Beschrijving:
+        p#houseDescription description
+        .ui.header Prijs:
+        p#housePrice Price
+        .ui.header Aantal personen:
+        p#houseCapacity capacity
+
+
+  img.bannerPicture(src='../images/'+pictures[0] alt='banner')
+  #header.headerHome
+    p.big= name
+  a(href='/users/newTravel')
+    .fab + Nieuwe reis
+  .layoutContainer
+    #side.layoutSide
+      h3 Residenties
+      each city in citys
+        each house in city.vacationhouses
+          .ui.card(onclick='showModal("'+ house.name+ '","'+house.description+ '","'+house.picture+ '","'+house.price+'","'+house.capacity+'")')
+            .image
+              img(src='../images/'+house.picture)
+            .content
+              a.header= house.name
+              .description
+                | #{house.description} 
+    #center.layoutCenter
+      h3 Info
+      p
+        | #{description}
+      h3 Een beetje inspiratie:
+      #player
+    .layoutSide
+      h3 Onze bestemmingen
+      each city in citys
+        .ui.card
+          .image
+            img(src='../images/'+city.pictures[0])
+          .content
+            a.header= city.name
+            .description
+              | #{city.description}
+
+  script.
+      //show house popup
+      function showModal(houseName,houseDescription,housePic,housePrice,houseCapacity){
+      console.log(houseName);
+      document.getElementById("houseName").innerHTML = houseName;
+      document.getElementById("pic").src="../images/"+housePic;
+      document.getElementById("houseDescription").innerHTML = houseDescription;
+      document.getElementById("housePrice").innerHTML = housePrice+' €/nacht';
+      document.getElementById("houseCapacity").innerHTML = houseCapacity;
+      $('.ui.modal')
+       .modal('show');
+    }
+
+    //rearrange content based on width
+    
+    function resize() {
+          
+          if(window.innerWidth<800){
+            var content = document.getElementById('center');
+            var parent = content.parentNode;
+            parent.insertBefore(content, parent.firstChild);
+          }
+          if(window.innerWidth>800){
+            var content = document.getElementById('side');
+            var parent = content.parentNode;
+            parent.insertBefore(content, parent.firstChild);
+
+          }
+        }
+    $( document ).ready(resize());
+        
+    window.onresize = resize;
+
+    // This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+    var ts='halo#{pictures[0]}'
+    function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+    width: '100%',
+    videoId: '#{yt}',
+    playerVars: {
+      autoplay: 1,        
+      controls: 1,        
+      showinfo: 0,        
+      modestbranding: 1,  
+      loop: 1,            
+      cc_load_policy: 0, 
+      iv_load_policy: 3,  
+      mute:1        
+    },
+    events: {}
+    });
+    }
