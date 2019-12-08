@@ -192,8 +192,10 @@ img.country{
 }
 @media (max-width: 800px){
   img.bannerPicture{
-    height:150px;
-    width: auto;
+    max-width: 100% !important;
+    height: 200px;
+    object-fit: cover;
+
 
   }
 
